@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Гильдии | Минималистичный стиль</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-1: #0a192f;
+            --dark-2: #172a45;
+            --dark-3: #303f60;
+            --accent: #64ffda;
+            --text: #ccd6f6;
+            --text-secondary: #8892b0;
+            --success: #2ecc71;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark-1);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-text-size-adjust: 100%;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        
+        header {
+            margin-bottom: 2rem;
+            text-align: center;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(90deg, var(--text), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .subtitle {
+            color: var(--text-secondary);
+            font-weight: 300;
+            font-size: 0.9rem;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            animation: slideUp 0.6s ease-out;
+        }
+        
+        .save-status {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            width: 100%;
+            order: 3;
+            margin-top: 0.5rem;
+        }
+        
+        .form-container {
+            background-color: var(--dark-2);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            animation: fadeIn 0.8s ease-out 0.2s both;
+        }
+        
+        .form-container:hover {
+            box-shadow: 0 15px 40px -15px rgba(0, 0, 0, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .form-title {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+            font-weight: 500;
+        }
+        
+        #addForm {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 0.5rem;
+        }
+        
+        label {
+            margin-bottom: 0.3rem;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-weight: 400;
+        }
+        
+        input[type="text"],
+        input[type="password"] {
+            padding: 0.7rem 0.9rem;
+            background-color: var(--dark-3);
+            border: 1px solid rgba(100, 255, 218, 0.1);
+            border-radius: 4px;
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(100, 255, 218, 0.2);
+        }
+        
+        button {
+            padding: 0.7rem 1.2rem;
+            border: none;
+            border-radius: 4px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .btn-primary {
+            background-color: var(--accent);
+            color: var(--dark-1);
+        }
+        
+        .btn-primary:hover {
+            background-color: #52e0c4;
+            box-shadow: 0 5px 15px -5px rgba(100, 255, 218, 0.4);
+        }
+        
+        .btn-success {
+            background-color: var(--success);
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background-color: #27ae60;
+            box-shadow: 0 5px 15px -5px rgba(46, 204, 113, 0.4);
+        }
+        
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background-color: #c0392b;
+            box-shadow: 0 5px 15px -5px rgba(231, 76, 60, 0.4);
+        }
+        
+        .btn-warning {
+            background-color: var(--warning);
+            color: white;
+        }
+        
+        .btn-warning:hover {
+            background-color: #e67e22;
+            box-shadow: 0 5px 15px -5px rgba(243, 156, 18, 0.4);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+            background-color: var(--dark-2);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 0.8s ease-out 0.4s both;
+            font-size: 0.9rem;
+        }
+        
+        th {
+            background-color: var(--dark-3);
+            color: var(--text);
+            padding: 0.8rem;
+            text-align: left;
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+        
+        td {
+            padding: 0.8rem;
+            border-bottom: 1px solid rgba(100, 255, 218, 0.1);
+            word-break: break-word;
+        }
+        
+        tr:last-child td {
+            border-bottom: none;
+        }
+        
+        tr {
+            transition: all 0.3s ease;
+        }
+        
+        tr:hover {
+            background-color: rgba(100, 255, 218, 0.03);
+        }
+        
+        .telegram-link {
+            color: var(--accent);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .telegram-link:hover {
+            color: #52e0c4;
+            text-decoration: underline;
+        }
+        
+        .empty-table {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+        
+        /* Анимации */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(100, 255, 218, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(100, 255, 218, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(100, 255, 218, 0); }
+        }
+        
+        /* Анимация добавления/удаления строк */
+        @keyframes rowInserted {
+            from { 
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes rowDeleted {
+            to { 
+                opacity: 0;
+                transform: translateY(-10px);
+                height: 0;
+                padding: 0;
+                margin: 0;
+                border: none;
+            }
+        }
+        
+        .row-animate-insert {
+            animation: rowInserted 0.4s ease-out;
+        }
+        
+        .row-animate-delete {
+            animation: rowDeleted 0.4s ease-out forwards;
+        }
+        
+        /* Модальное окно */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(10, 25, 47, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease-out;
+            padding: 1rem;
+        }
+        
+        .modal-content {
+            background-color: var(--dark-2);
+            padding: 1.5rem;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 15px 40px -15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .modal-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+        
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.8rem;
+            margin-top: 1.2rem;
+        }
+        
+        /* Бейдж роли */
+        .role-badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .role-guest {
+            background-color: var(--dark-3);
+            color: var(--text-secondary);
+        }
+        
+        .role-admin {
+            background-color: rgba(100, 255, 218, 0.1);
+            color: var(--accent);
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            #addForm {
+                grid-template-columns: 1fr;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .controls > div {
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
+            
+            .modal-content {
+                padding: 1.2rem;
+            }
+            
+            button {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .modal-actions {
+                flex-direction: column;
+            }
+            
+            .modal-actions button {
+                width: 100%;
+            }
+            
+            table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+            
+            th, td {
+                min-width: 100px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .form-container {
+                padding: 1.2rem;
+            }
+            
+            .form-title {
+                font-size: 1rem;
+            }
+            
+            input[type="text"],
+            input[type="password"] {
+                padding: 0.6rem 0.8rem;
+            }
+            
+            button {
+                padding: 0.6rem 1rem;
+            }
+            
+            th, td {
+                padding: 0.6rem;
+            }
+            
+            .empty-table {
+                padding: 1.5rem;
+            }
+        }
+        
+        /* Улучшения для мобильных устройств */
+        @media (hover: none) {
+            button:hover {
+                transform: none;
+            }
+            
+            .form-container:hover {
+                transform: none;
+                box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.2);
+            }
+            
+            .telegram-link:hover {
+                color: var(--accent);
+                text-decoration: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>メ-Альянс</h1>
+            <p class="subtitle">Интерфейс для управления таблицы</p>
+        </header>
+        
+        <!-- Кнопка входа/выхода -->
+        <div class="controls">
+            <div>
+                <button id="authBtn" class="btn-warning" onclick="toggleAuthModal()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                        <polyline points="10 17 15 12 10 7"></polyline>
+                        <line x1="15" y1="12" x2="3" y2="12"></line>
+                    </svg>
+                    Войти как администратор
+                </button>
+                <span id="userStatus" class="role-badge role-guest" style="margin-left: 0.5rem;">Гость</span>
+            </div>
+            
+            <button class="btn-success pulse" onclick="saveData()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                    <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                    <polyline points="7 3 7 8 15 8"></polyline>
+                </svg>
+                Сохранить
+            </button>
+            <div class="save-status" id="saveStatus">Последнее сохранение: только что</div>
+        </div>
+        
+        <div class="form-container">
+            <h2 class="form-title">Добавить участника</h2>
+            <form id="addForm" onsubmit="return false;">
+                <div class="input-group">
+                    <label for="nickname">Никнейм</label>
+                    <input type="text" id="nickname" placeholder="Введите никнейм" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="telegram">Telegram</label>
+                    <input type="text" id="telegram" placeholder="@username" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="guild">Гильдия</label>
+                    <input type="text" id="guild" placeholder="Название гильдии" required>
+                </div>
+                
+                <button class="btn-primary" onclick="addUser()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 5v14M5 12h14"></path>
+                    </svg>
+                    Добавить
+                </button>
+            </form>
+        </div>
+
+        <table id="usersTable">
+            <thead>
+                <tr>
+                    <th>Никнейм</th>
+                    <th>Telegram</th>
+                    <th>Гильдия</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody id="usersBody">
+                <!-- Данные будут загружены здесь -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Модальное окно авторизации -->
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <h2 class="modal-title">Авторизация</h2>
+            <div class="input-group">
+                <label for="login">Логин</label>
+                <input type="text" id="login" placeholder="Введите логин">
+            </div>
+            <div class="input-group">
+                <label for="password">Пароль</label>
+                <input type="password" id="password" placeholder="Введите пароль">
+            </div>
+            <div class="modal-actions">
+                <button class="btn-danger" onclick="closeAuthModal()">Отмена</button>
+                <button class="btn-success" onclick="login()">Войти</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let users = [];
+        let lastSaveTime = 'только что';
+        let isAdmin = false;
+        let guestHasAdded = false; // Флаг, что гость уже добавил участника
+
+        // Загрузка данных при старте
+        function loadData() {
+            const savedData = localStorage.getItem('guildUsers');
+            if (savedData) {
+                try {
+                    users = JSON.parse(savedData);
+                    renderTable();
+                    updateSaveStatus();
+                } catch (e) {
+                    console.error('Ошибка загрузки данных:', e);
+                    showTempMessage('⚠️ Ошибка загрузки данных', 'danger');
+                }
+            }
+            
+            // Проверяем, есть ли сохраненная сессия администратора
+            const adminSession = localStorage.getItem('adminSession');
+            if (adminSession === 'active') {
+                isAdmin = true;
+                updateUIForAdmin();
+            }
+        }
+
+        // Сохранение данных
+        function saveData() {
+            try {
+                localStorage.setItem('guildUsers', JSON.stringify(users));
+                lastSaveTime = new Date().toLocaleTimeString();
+                updateSaveStatus();
+                showTempMessage('✓ Данные сохранены', 'success');
+                console.log('Данные сохранены:', lastSaveTime);
+                
+                // Анимация кнопки сохранения
+                const saveBtn = document.querySelector('.btn-success');
+                saveBtn.classList.remove('pulse');
+                void saveBtn.offsetWidth; // Trigger reflow
+                saveBtn.classList.add('pulse');
+            } catch (e) {
+                showTempMessage('⚠️ Ошибка сохранения', 'danger');
+                console.error('Ошибка сохранения:', e);
+            }
+        }
+
+        // Добавление пользователя
+        function addUser() {
+            if (!isAdmin && guestHasAdded) {
+                showTempMessage('Гость может добавить только одного участника', 'danger');
+                return;
+            }
+            
+            const nickname = document.getElementById('nickname').value.trim();
+            const telegram = document.getElementById('telegram').value.trim();
+            const guild = document.getElementById('guild').value.trim();
+
+            if (nickname && telegram && guild) {
+                const newUser = {
+                    nickname: nickname,
+                    telegram: telegram.startsWith('@') ? telegram : '@' + telegram,
+                    guild: guild
+                };
+                
+                users.push(newUser);
+                document.getElementById('addForm').reset();
+                
+                // Устанавливаем флаг, что гость добавил участника
+                if (!isAdmin) guestHasAdded = true;
+                
+                // Анимация добавления
+                renderTableWithAnimation(newUser);
+                showTempMessage(`✓ Добавлен: ${nickname}`, 'success');
+                
+                // Анимация формы
+                const form = document.querySelector('.form-container');
+                form.style.transform = 'translateY(0)';
+            } else {
+                showTempMessage('Заполните все поля', 'danger');
+                // Анимация ошибки
+                const form = document.querySelector('.form-container');
+                form.style.transform = 'translateX(10px)';
+                setTimeout(() => {
+                    form.style.transform = 'translateX(-10px)';
+                    setTimeout(() => {
+                        form.style.transform = 'translateX(0)';
+                    }, 100);
+                }, 100);
+            }
+        }
+
+        // Удаление пользователя
+        function deleteUser(index, button) {
+            if (!isAdmin) {
+                showTempMessage('Только администратор может удалять участников', 'danger');
+                return;
+            }
+            
+            const deletedUser = users[index];
+            
+            // Анимация перед удалением
+            const row = button.closest('tr');
+            row.classList.add('row-animate-delete');
+            
+            setTimeout(() => {
+                users.splice(index, 1);
+                renderTable();
+                showTempMessage(`✗ Удалён: ${deletedUser.nickname}`, 'danger');
+            }, 400);
+        }
+
+        // Отрисовка таблицы с анимацией
+        function renderTableWithAnimation(newUser) {
+            const tbody = document.getElementById('usersBody');
+            
+            if (users.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="4" class="empty-table">
+                            Список участников пуст
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = '';
+            
+            users.forEach((user, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${user.nickname}</td>
+                    <td><a href="https://t.me/${user.telegram.replace('@', '')}" class="telegram-link" target="_blank">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                        </svg>
+                        ${user.telegram}
+                    </a></td>
+                    <td>${user.guild}</td>
+                    <td>
+                        <button class="btn-danger" onclick="deleteUser(${index}, this)" ${!isAdmin ? 'disabled style="opacity: 0.5; cursor: not-allowed;"' : ''}>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="3 6 5 6 21 6"></polyline>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            </svg>
+                            Удалить
+                        </button>
+                    </td>
+                `;
+                
+                if (user === newUser) {
+                    row.classList.add('row-animate-insert');
+                }
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        // Обычная отрисовка таблицы
+        function renderTable() {
+            const tbody = document.getElementById('usersBody');
+            
+            if (users.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="4" class="empty-table">
+                            Список участников пуст
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = '';
+            
+            users.forEach((user, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${user.nickname}</td>
+                    <td><a href="https://t.me/${user.telegram.replace('@', '')}" class="telegram-link" target="_blank">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                        </svg>
+                        ${user.telegram}
+                    </a></td>
+                    <td>${user.guild}</td>
+                    <td>
+                        <button class="btn-danger" onclick="deleteUser(${index}, this)" ${!isAdmin ? 'disabled style="opacity: 0.5; cursor: not-allowed;"' : ''}>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="3 6 5 6 21 6"></polyline>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            </svg>
+                            Удалить
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Обновление статуса сохранения
+        function updateSaveStatus() {
+            document.getElementById('saveStatus').textContent = 
+                `Последнее сохранение: ${lastSaveTime}`;
+        }
+
+        // Временное сообщение
+        function showTempMessage(message, type) {
+            const statusEl = document.getElementById('saveStatus');
+            const originalText = statusEl.textContent;
+            
+            statusEl.textContent = message;
+            statusEl.style.color = type === 'success' ? 'var(--success)' : 
+                                  type === 'danger' ? 'var(--danger)' : 
+                                  'var(--warning)';
+            
+            setTimeout(() => {
+                statusEl.textContent = originalText;
+                statusEl.style.color = 'var(--text-secondary)';
+            }, 3000);
+        }
+
+        // Управление модальным окном авторизации
+        function toggleAuthModal() {
+            const modal = document.getElementById('authModal');
+            if (isAdmin) {
+                logout();
+                return;
+            }
+            modal.style.display = 'flex';
+        }
+
+        function closeAuthModal() {
+            document.getElementById('authModal').style.display = 'none';
+        }
+
+        // Функция входа
+        function login() {
+            const login = document.getElementById('login').value.trim();
+            const password = document.getElementById('password').value.trim();
+            
+            if (login === 'admin' && password === 'admin') {
+                isAdmin = true;
+                localStorage.setItem('adminSession', 'active');
+                updateUIForAdmin();
+                closeAuthModal();
+                showTempMessage('✓ Вы вошли как администратор', 'success');
+            } else {
+                showTempMessage('Неверный логин или пароль', 'danger');
+                // Анимация ошибки
+                const modalContent = document.querySelector('.modal-content');
+                modalContent.style.transform = 'translateX(10px)';
+                setTimeout(() => {
+                    modalContent.style.transform = 'translateX(-10px)';
+                    setTimeout(() => {
+                        modalContent.style.transform = 'translateX(0)';
+                    }, 100);
+                }, 100);
+            }
+        }
+
+        // Функция выхода
+        function logout() {
+            isAdmin = false;
+            localStorage.removeItem('adminSession');
+            updateUIForGuest();
+            showTempMessage('Вы вышли из системы', 'warning');
+        }
+
+        // Обновление интерфейса для администратора
+        function updateUIForAdmin() {
+            document.getElementById('authBtn').innerHTML = `
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+                Выйти
+            `;
+            document.getElementById('userStatus').textContent = 'Администратор';
+            document.getElementById('userStatus').className = 'role-badge role-admin';
+            renderTable(); // Перерисовываем таблицу с активными кнопками удаления
+        }
+
+        // Обновление интерфейса для гостя
+        function updateUIForGuest() {
+            document.getElementById('authBtn').innerHTML = `
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                    <polyline points="10 17 15 12 10 7"></polyline>
+                    <line x1="15" y1="12" x2="3" y2="12"></line>
+                </svg>
+                Войти как администратор
+            `;
+            document.getElementById('userStatus').textContent = 'Гость';
+            document.getElementById('userStatus').className = 'role-badge role-guest';
+            renderTable(); // Перерисовываем таблицу с неактивными кнопками удаления
+        }
+
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', () => {
+            loadData();
+            
+            // Сохраняем при закрытии страницы
+            window.addEventListener('beforeunload', saveData);
+            
+            // Плавное появление элементов
+            const elements = document.querySelectorAll('header, .form-container, .controls, table');
+            elements.forEach((el, i) => {
+                el.style.opacity = '0';
+                setTimeout(() => {
+                    el.style.transition = 'opacity 0.6s ease-out';
+                    el.style.opacity = '1';
+                }, i * 100);
+            });
+        });
+    </script>
+</body>
+</html>
